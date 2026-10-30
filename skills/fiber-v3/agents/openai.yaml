@@ -1,0 +1,3 @@
+interface:
+  display_name: "Fiber v3"
+  short_description: "Write correct Fiber v3 Go apps"
