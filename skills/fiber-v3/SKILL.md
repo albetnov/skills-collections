@@ -1,6 +1,6 @@
 ---
 name: fiber-v3
-description: Fiber v3 Go web framework. Use when writing, reviewing, or debugging Fiber v3 code: routes and handlers, middleware and errors, Ctx lifetime and zero allocation, goroutines/channels/mutexes in handlers, binding and validation, app lifecycle, or the Fiber client.
+description: "Fiber v3 Go web framework. Use when writing, reviewing, or debugging Fiber v3 code: routes and handlers, middleware and errors, Ctx lifetime and zero allocation, goroutines/channels/mutexes in handlers, binding and validation, app lifecycle, or the Fiber client."
 ---
 
 # Fiber v3

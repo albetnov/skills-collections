@@ -1,6 +1,6 @@
 ---
 name: fiber-v3-architecture
-description: Fiber v3 application architecture and REST API contracts. Use when designing or restructuring a Fiber v3 project: feature-module layout, route grouping and versioning, REST resource design, HTTP status/header conventions, error envelopes, pagination, idempotency, or OpenAPI specs.
+description: "Fiber v3 application architecture and REST API contracts. Use when designing or restructuring a Fiber v3 project: feature-module layout, route grouping and versioning, REST resource design, HTTP status/header conventions, error envelopes, pagination, idempotency, or OpenAPI specs."
 ---
 
 # Fiber v3 architecture
