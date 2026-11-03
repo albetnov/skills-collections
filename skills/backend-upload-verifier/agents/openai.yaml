@@ -1,0 +1,3 @@
+interface:
+  display_name: "Backend Upload Verifier"
+  short_description: "Validate and serve client-processed uploads safely"
