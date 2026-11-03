@@ -10,6 +10,7 @@ Only [`skills/`](skills/) is published here. Everything else in the repository i
 | --- | --- |
 | [`fiber-v3`](skills/fiber-v3/SKILL.md) | Writing, reviewing, or debugging Fiber v3 code: routing, middleware, `Ctx` lifetime, concurrency, binding, app lifecycle, the Fiber client. |
 | [`fiber-v3-architecture`](skills/fiber-v3-architecture/SKILL.md) | Designing or restructuring a Fiber v3 app: feature modules, REST contracts, status codes, error envelopes, pagination, idempotency, OpenAPI. |
+| [`solid-v2`](skills/solid-v2/SKILL.md) | Writing, reviewing, or debugging Solid 2.0 code: signals, effects, stores, async boundaries, SSR, routing, server functions, forms, and tests. |
 
 ## Install
 
