@@ -13,10 +13,16 @@
 1. Change `api/openapi.yaml` first: path, operation, schemas, status codes, headers, examples.
 2. Review the contract with the handler owner.
 3. Implement the handler and service against it.
-4. Add a contract test that fails when a registered route or response shape is missing from the spec.
+4. Add the automated checks below; they fail when a registered route or response shape is missing from the spec.
 5. Keep generated types or clients derived from the spec; do not hand-edit generated output.
 
 The spec is the source of truth for paths, request/response schemas, status codes, and shared headers. Internal implementation details stay out.
+
+## Code-first alternative
+
+[`huma`](https://github.com/danielgtaylor/huma) generates an OpenAPI 3.1 spec from registered operations; its `humafiber` adapter imports `github.com/gofiber/fiber/v3`. The [Fiber recipe](https://docs.gofiber.io/recipes/openapi/) demonstrates the wiring, though its snippets still show the v2 import.
+
+Choose code-first only if the generated spec is committed as `api/openapi.yaml` and every CI check below still runs. Generation removes hand-written spec drift only for operations registered through Huma: `fiber.Config.ErrorHandler` responses (`404`/`405`, recovered panics) and the pre-middleware `501` bypass it, so the route-parity check still applies. The spec-first workflow above is the default.
 
 ## Naming
 
@@ -51,11 +57,28 @@ Apply `security` globally and override with `security: []` only on explicitly pu
 
 ## Validation in CI
 
-- Lint the spec (for example with Spectral) and fail on errors.
-- Validate that every registered Fiber route appears in the spec and vice versa.
-- Validate request/response examples against their schemas.
-- Run contract tests against the real handler for the main success path and every documented error status.
-- Treat an undocumented endpoint as a failing build.
+Four checks, all machine-verifiable. Wire them into one `make api-check` target and run it on every pull request.
+
+### Route parity
+
+Preferred: generate the server from the spec with `oapi-codegen` (`fiber-v3-server`, `generate.strict-server: true`). `RegisterHandlers` registers exactly the documented operations; `ServerInterface` fails to compile while an operation lacks a handler; typed response structs make an undocumented response body a compile error.
+
+Codegen proves spec -> code only. Keep a reverse check that catches ad-hoc `app.Get` routes: build the router without listening and diff `app.GetRoutes(true)` (middleware filtered out) against the spec. Join spec paths with `servers[0].url`, normalize Fiber `:id` and `*` to OpenAPI `{id}`/`{path}`, and fail if either side has a leftover. Ignore mount placeholders and the `HEAD` routes Fiber synthesizes for every `GET`; a `GET` operation covers `HEAD`. Run it as a normal Go test.
+
+### Spec and examples
+
+- `vacuum lint -d -e api/openapi.yaml` fails the build on errors; add rules for the `operationId` pattern, one tag per operation, an `ErrorResponse` reference on every error response, and `bearerAuth` on every protected operation.
+- Vacuum's `oas3-valid-media-example`, `oas3-valid-parameter-example`, and `oas3-valid-schema-example` validate every example against its schema. Redocly's `no-invalid-media-type-examples` covers the same when the project already uses Node.
+
+### Runtime responses
+
+- `github.com/oapi-codegen/fiber-v3-middleware` validates each request against the spec in-process.
+- Validate responses with `openapi3filter.ValidateResponse` in tests, or run `schemathesis run api/openapi.yaml --url <test-server> --checks all` against a seeded instance. Schemathesis derives cases from the spec, so response drift fails without hand-written fixtures.
+
+### Breaking changes and generated artifacts
+
+- `oasdiff breaking --fail-on ERR <merge-base>.yaml api/openapi.yaml` fails when a change breaks clients; the fix is a new path major version, not a spec edit.
+- Regenerate clients/types and run `git diff --exit-code` so stale generated output fails the build.
 
 ## Versioning and deprecation
 
@@ -76,5 +99,5 @@ Copy [`assets/openapi.yaml`](../assets/openapi.yaml) into `api/openapi.yaml` and
 - Every error references the shared `ErrorResponse`.
 - Every authenticated operation uses `bearerAuth`.
 - Shared headers and parameters are components, not inline copies.
-- The spec lints cleanly and contract tests pass.
+- The spec lints cleanly, route parity passes, and the contract tests pass.
 - Deprecated operations carry `deprecated: true` and a replacement path.
