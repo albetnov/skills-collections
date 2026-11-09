@@ -1,0 +1,3 @@
+interface:
+  display_name: "Android Data Layer"
+  short_description: "Offline-first Store5, Room, and Retrofit data"

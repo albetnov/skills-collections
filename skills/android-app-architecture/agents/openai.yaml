@@ -1,0 +1,3 @@
+interface:
+  display_name: "Android App Architecture"
+  short_description: "Compose-first Android layers with Metro DI"

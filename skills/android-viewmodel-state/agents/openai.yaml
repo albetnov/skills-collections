@@ -1,0 +1,3 @@
+interface:
+  display_name: "Android ViewModel State"
+  short_description: "Per-screen ViewModel state: snapshot or Orbit MVI"

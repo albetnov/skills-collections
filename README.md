@@ -8,6 +8,9 @@ Only [`skills/`](skills/) is published here. Everything else in the repository i
 
 | Skill | Use when |
 | --- | --- |
+| [`android-app-architecture`](skills/android-app-architecture/SKILL.md) | Laying out feature modules and layers, placing UI/domain/data code, Metro graphs and bindings, scoping, or Compose ViewModel injection. |
+| [`android-data-layer`](skills/android-data-layer/SKILL.md) | Wiring an offline-first cache: Store5 streams, Room source of truth, Retrofit fetchers, write outbox, error mapping. |
+| [`android-viewmodel-state`](skills/android-viewmodel-state/SKILL.md) | Choosing vanilla snapshot State or Orbit MVI for a screen, exposing immutable ViewModel state, one-shot events, or container tests. |
 | [`backend-upload-verifier`](skills/backend-upload-verifier/SKILL.md) | Designing or reviewing upload admission: magic bytes and dimension limits, presigned S3/R2/GCS policies, checksums, and safe serving of user files. |
 | [`client-compute-architect`](skills/client-compute-architect/SKILL.md) | Designing browser-native image/video processing, client PDF/CSV exports, and direct-to-storage uploads with hashing, retry, and offline queues. |
 | [`fiber-v3`](skills/fiber-v3/SKILL.md) | Writing, reviewing, or debugging Fiber v3 code: routing, middleware, `Ctx` lifetime, concurrency, binding, app lifecycle, the Fiber client. |
@@ -51,3 +54,7 @@ npx skills check             # Check for updates
 npx skills update            # Update installed skills
 npx skills remove fiber-v3   # Remove a skill
 ```
+
+## Acknowledgements
+
+The `android-app-architecture`, `android-data-layer`, and `android-viewmodel-state` skills were initially derived from [awesome-android-agent-skills](https://github.com/new-silvermoon/awesome-android-agent-skills), then substantially rewritten for a modern pure-Android stack. See [LICENSE](LICENSE) for the Apache-2.0 terms and attribution notice.
