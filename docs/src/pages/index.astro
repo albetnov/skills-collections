@@ -1,0 +1,95 @@
+---
+import { readdirSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import '../styles/global.css';
+
+const skillsRoot = resolve(process.cwd(), '../skills');
+const skills = readdirSync(skillsRoot, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .flatMap((entry) => {
+    try {
+      const file = readFileSync(resolve(skillsRoot, entry.name, 'SKILL.md'), 'utf8');
+      const name = file.match(/^name:\s*(.+)$/m)?.[1];
+      const rawDescription = file.match(/^description:\s*(.+)$/m)?.[1];
+      const title = file.match(/^#\s+(.+)$/m)?.[1] ?? entry.name;
+      if (!name || !rawDescription) return [];
+      const description = rawDescription.startsWith('"') ? JSON.parse(rawDescription) : rawDescription;
+      return [{ name, title, description }];
+    } catch { return []; }
+  })
+  .sort ( (a, b) => a.name.localeCompare(b.name));
+const repo = 'https://github.com/albetnov/skills-collections';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A personal collection of skills for AI coding agents. Find a skill and put it to work." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>Skills Collection — Give your agent an edge</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Skills Collection home"><span class="brand-mark">S<span>!</span></span><span>SKILLS<br />COLLECTION</span></a>
+      <nav aria-label="Main navigation"><a href="#skills">The skills <span>↗</span></a><a href={repo}>GitHub <span>↗</span></a></nav>
+    </header>
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="hero-note">A PERSONAL COLLECTION FOR AI CODING AGENTS</p>
+          <h1 id="hero-title">GIVE YOUR<br /><span>AGENT</span><br />AN EDGE<span class="period">.</span></h1>
+          <p class="hero-description">Good instructions make all the difference. Find the right skill for the job and put it to work.</p>
+          <a class="primary-action" href="#skills">EXPLORE THE SKILLS <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-label">THE RIGHT SKILL.<br /><strong>THE RIGHT MOVE.</strong></div>
+          <div class="art-center"><span>SKILL</span><b>ISSUE?</b><i>SOLVED.</i></div>
+          <div class="art-footer"><span>BUILT FOR THE WAY YOU WORK</span><strong>{String(skills.length).padStart(2, '0')} SKILLS IN THE COLLECTION</strong></div>
+        </div>
+      </section>
+      <section id="skills" class="collection" aria-labelledby="collection-title">
+        <div class="collection-heading">
+          <div><p class="section-tag">PICK YOUR NEXT MOVE</p><h2 id="collection-title">THE<br /><span>COLLECTION</span><span class="period">.</span></h2></div>
+          <p>From Android architecture to browser-side compute. Pick a skill to see what it does and how to install it.</p>
+        </div>
+        <div class="skill-list">
+          {skills.map((skill, index) => (
+            <details class="skill" name="skills">
+              <summary><span class="skill-number">{String(index + 1).padStart(2, '0')}</span><span class="skill-name">{skill.title}</span><span class="skill-id">{skill.name}</span><span class="skill-toggle" aria-hidden="true"></span></summary>
+              <div class="skill-content"><p>{skill.description}</p><div class="command"><div><span>INSTALL THIS SKILL</span><code>npx skills add albetnov/skills-collections --skill {skill.name}</code></div><button type="button" data-command={`npx skills add albetnov/skills-collections --skill ${skill.name}`}>COPY</button></div><a href={`${repo}/tree/main/skills/${skill.name}`}>VIEW SKILL ON GITHUB <span aria-hidden="true">↗</span></a></div>
+            </details>
+          ))}
+        </div>
+      </section>
+      <section class="install" aria-labelledby="install-title">
+        <div><h2 id="install-title">WANT THE<br /><span>WHOLE SET?</span></h2><p>Install every skill in the collection with one command.</p></div>
+        <div class="install-side"><div class="command command-dark"><div><span>INSTALL ALL SKILLS</span><code>npx skills add albetnov/skills-collections</code></div><button type="button" data-command="npx skills add albetnov/skills-collections">COPY</button></div><a href={repo}>EXPLORE THE REPOSITORY <span aria-hidden="true">↗</span></a></div>
+      </section>
+    </main>
+    <footer><a class="footer-brand" href="#top">SKILLS COLLECTION<span>.</span></a><p>A personal collection of skills for AI coding agents.</p><a href={repo}>GITHUB ↗</a></footer>
+    <script>
+      // Keyboard activation stays immediate; pointer-initiated changes may animate.
+      document.addEventListener('pointerdown', () => document.documentElement.classList.add('pointer-interaction'));
+      document.addEventListener('keydown', () => document.documentElement.classList.remove('pointer-interaction'));
+
+      document.querySelectorAll<HTMLButtonElement>('[data-command]').forEach((button) => {
+        let resetTimer: number | undefined;
+        button.setAttribute('aria-live', 'polite');
+        button.addEventListener('click', async () => {
+          window.clearTimeout(resetTimer);
+          try {
+            await navigator.clipboard.writeText(button.dataset.command ?? '');
+            button.textContent = 'COPIED!';
+          } catch {
+            button.textContent = 'COPY FAILED';
+          }
+          resetTimer = window.setTimeout(() => { button.textContent = 'COPY'; }, 2000);
+        });
+      });
+    </script>
+  </body>
+</html>
