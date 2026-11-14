@@ -36,9 +36,7 @@ jobs:
 
       - name: Build site
         working-directory: docs
-        run: |
-          bun run build -- --outDir ./dist
-          SITE_BASE=/skills-collections bun run build -- --outDir ./dist/skills-collections
+        run: bun run build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

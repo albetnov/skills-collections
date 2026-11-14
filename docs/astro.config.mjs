@@ -4,5 +4,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://skills.albetnv.dev',
-  base: process.env.SITE_BASE ?? '/',
+  build: {
+    inlineStylesheets: 'always',
+  },
 });
