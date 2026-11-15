@@ -3,6 +3,19 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+.skill-content > .skill-credit {
+  margin: 1.5rem 0;
+  padding-top: 1rem;
+  border-top: 1px solid #777;
+  font-size: .95rem;
+  line-height: 1.55;
+}
+.skill-credit a {
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+
 /* The opening lands like a sequence of cut-paper title cards. Content stays
    readable throughout, and the skill index itself never moves on interaction. */
 @media (prefers-reduced-motion: no-preference) {

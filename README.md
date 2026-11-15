@@ -15,6 +15,7 @@ Only [`skills/`](skills/) is published here. Everything else in the repository i
 | [`client-compute-architect`](skills/client-compute-architect/SKILL.md) | Designing browser-native image/video processing, client PDF/CSV exports, and direct-to-storage uploads with hashing, retry, and offline queues. |
 | [`fiber-v3`](skills/fiber-v3/SKILL.md) | Writing, reviewing, or debugging Fiber v3 code: routing, middleware, `Ctx` lifetime, concurrency, binding, app lifecycle, the Fiber client. |
 | [`fiber-v3-architecture`](skills/fiber-v3-architecture/SKILL.md) | Designing or restructuring a Fiber v3 app: feature modules, REST contracts, status codes, error envelopes, pagination, idempotency, OpenAPI. |
+| [`flutter-animate`](skills/flutter-animate/SKILL.md) | Building Flutter state transitions, entrances and exits, route motion, and interruptible gestures with reduced-motion support. |
 | [`solid-v2`](skills/solid-v2/SKILL.md) | Writing, reviewing, or debugging Solid 2.0 code: signals, effects, stores, async boundaries, SSR, routing, server functions, forms, and tests. |
 
 ## Install
@@ -56,5 +57,7 @@ npx skills remove fiber-v3   # Remove a skill
 ```
 
 ## Acknowledgements
+
+The `flutter-animate` skill is a Flutter adaptation of Emil Kowalski's [`animate` skill](https://github.com/emilkowalski/skills/tree/main/skills/animate) from [emilkowalski/skills](https://github.com/emilkowalski/skills). Its implementation guidance and recipes were rewritten for Flutter and Dart. The upstream MIT copyright and permission notice are preserved in [the skill's LICENSE](skills/flutter-animate/LICENSE).
 
 The `android-app-architecture`, `android-data-layer`, and `android-viewmodel-state` skills were initially derived from [awesome-android-agent-skills](https://github.com/new-silvermoon/awesome-android-agent-skills), then substantially rewritten for a modern pure-Android stack. See [LICENSE](LICENSE) for the Apache-2.0 terms and attribution notice.

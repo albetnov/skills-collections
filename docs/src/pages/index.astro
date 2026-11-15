@@ -19,6 +19,7 @@ const skills = readdirSync(skillsRoot, { withFileTypes: true })
   })
   .sort ( (a, b) => a.name.localeCompare(b.name));
 const repo = 'https://github.com/albetnov/skills-collections';
+const androidCredits = new Set(['android-app-architecture', 'android-data-layer', 'android-viewmodel-state']);
 ---
 <!doctype html>
 <html lang="en">
@@ -60,7 +61,17 @@ const repo = 'https://github.com/albetnov/skills-collections';
           {skills.map((skill, index) => (
             <details class="skill" name="skills">
               <summary><span class="skill-number">{String(index + 1).padStart(2, '0')}</span><span class="skill-name">{skill.title}</span><span class="skill-id">{skill.name}</span><span class="skill-toggle" aria-hidden="true"></span></summary>
-              <div class="skill-content"><p>{skill.description}</p><div class="command"><div><span>INSTALL THIS SKILL</span><code>npx skills add albetnov/skills-collections --skill {skill.name}</code></div><button type="button" data-command={`npx skills add albetnov/skills-collections --skill ${skill.name}`}>COPY</button></div><a href={`${repo}/tree/main/skills/${skill.name}`}>VIEW SKILL ON GITHUB <span aria-hidden="true">↗</span></a></div>
+              <div class="skill-content">
+                <p>{skill.description}</p>
+                <div class="command"><div><span>INSTALL THIS SKILL</span><code>npx skills add albetnov/skills-collections --skill {skill.name}</code></div><button type="button" data-command={`npx skills add albetnov/skills-collections --skill ${skill.name}`}>COPY</button></div>
+                {skill.name === 'flutter-animate' && (
+                  <p class="skill-credit">A Flutter adaptation of Emil Kowalski’s <a href="https://github.com/emilkowalski/skills/tree/main/skills/animate">animate skill</a>, with guidance and recipes rewritten for Flutter and Dart. <a href={`${repo}/blob/main/skills/flutter-animate/LICENSE`}>MIT notice</a>.</p>
+                )}
+                {androidCredits.has(skill.name) && (
+                  <p class="skill-credit">Initially derived from <a href="https://github.com/new-silvermoon/awesome-android-agent-skills">awesome-android-agent-skills</a>, then substantially rewritten for a modern pure-Android stack. <a href={`${repo}/blob/main/LICENSE`}>Apache-2.0 attribution and license</a>.</p>
+                )}
+                <a href={`${repo}/tree/main/skills/${skill.name}`}>VIEW SKILL ON GITHUB <span aria-hidden="true">↗</span></a>
+              </div>
             </details>
           ))}
         </div>
