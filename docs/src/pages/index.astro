@@ -6,6 +6,7 @@ import '../styles/global.css';
 const skillsRoot = resolve(process.cwd(), '../skills');
 const skills = readdirSync(skillsRoot, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
+  .filter((entry) => entry.name !== 'solid-v2')
   .flatMap((entry) => {
     try {
       const file = readFileSync(resolve(skillsRoot, entry.name, 'SKILL.md'), 'utf8');
@@ -18,6 +19,14 @@ const skills = readdirSync(skillsRoot, { withFileTypes: true })
     } catch { return []; }
   })
   .sort ( (a, b) => a.name.localeCompare(b.name));
+const retiredSkills = [
+  {
+    name: 'solid-v2',
+    title: 'Solid 2.0',
+    description: 'Retired. Solid now ships assistant guidance with its packages, matched to the installed version.',
+    guide: 'https://docs.solidjs.com/guides/ai-tools/',
+  },
+];
 const repo = 'https://github.com/albetnov/skills-collections';
 const androidCredits = new Set(['android-app-architecture', 'android-data-layer', 'android-viewmodel-state']);
 ---
@@ -75,6 +84,22 @@ const androidCredits = new Set(['android-app-architecture', 'android-data-layer'
             </details>
           ))}
         </div>
+        <section class="retired" aria-labelledby="retired-title">
+          <div class="retired-heading">
+            <h3 id="retired-title">RETIRED<br /><span>SKILLS.</span></h3>
+            <p>Kept here for reference. Use the linked current guidance when a replacement is available.</p>
+          </div>
+          <div class="retired-list">
+            {retiredSkills.map((skill) => (
+              <article class="retired-item">
+                <div class="retired-label"><span class="retired-mark" aria-hidden="true">×</span><span>RETIRED</span></div>
+                <div class="retired-main"><h4>{skill.title}</h4><p>{skill.description}</p></div>
+                <a href={`${repo}/tree/main/skills/${skill.name}`}>ARCHIVE <span aria-hidden="true">↗</span></a>
+                <a class="retired-current" href={skill.guide}>CURRENT GUIDANCE <span aria-hidden="true">↗</span></a>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
       <section class="install" aria-labelledby="install-title">
         <div><h2 id="install-title">WANT THE<br /><span>WHOLE SET?</span></h2><p>Install every skill in the collection with one command.</p></div>

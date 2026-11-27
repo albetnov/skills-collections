@@ -16,9 +16,11 @@ Only [`skills/`](skills/) is published here. Everything else in the repository i
 | [`fiber-v3`](skills/fiber-v3/SKILL.md) | Writing, reviewing, or debugging Fiber v3 code: routing, middleware, `Ctx` lifetime, concurrency, binding, app lifecycle, the Fiber client. |
 | [`fiber-v3-architecture`](skills/fiber-v3-architecture/SKILL.md) | Designing or restructuring a Fiber v3 app: feature modules, REST contracts, status codes, error envelopes, pagination, idempotency, OpenAPI. |
 | [`flutter-animate`](skills/flutter-animate/SKILL.md) | Building Flutter state transitions, entrances and exits, route motion, and interruptible gestures with reduced-motion support. |
-| [`solid-v2`](skills/solid-v2/SKILL.md) | Writing, reviewing, or debugging Solid 2.0 code: signals, effects, stores, async boundaries, SSR, routing, server functions, forms, and tests. |
+| Solid 2.0 | Use the [built-in Solid guidance for AI tools](https://docs.solidjs.com/guides/ai-tools/), which documents the installed cheatsheet, skills, and project `AGENTS.md` instructions. |
 
 ## Install
+
+The former [`solid-v2` skill](skills/solid-v2/SKILL.md) is retired and remains in the repository as an archive. Use Solid's built-in guidance linked above instead.
 
 Skills are installed with the [`skills`](https://skills.sh) CLI, no install needed:
 

@@ -16,6 +16,83 @@
   text-underline-offset: .2em;
 }
 
+.retired {
+  margin-top: 6rem;
+  padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem) 3rem;
+  background: #111;
+  color: #f4f1e9;
+}
+.retired-heading {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #555;
+}
+.retired-heading h3 {
+  margin: 0;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: .88;
+  letter-spacing: -.035em;
+}
+.retired-heading h3 span { color: #ef2734; }
+.retired-heading p {
+  max-width: 32rem;
+  margin: 0 0 .15rem auto;
+  color: #e0ddd5;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+.retired-item {
+  display: grid;
+  grid-template-columns: 8rem minmax(14rem, 1fr) auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #555;
+}
+.retired-label {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  color: #ff6971;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.retired-mark { font-size: 1.5rem; line-height: 1; }
+.retired-main h4 {
+  margin: 0 0 .35rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.retired-main p {
+  max-width: 48rem;
+  margin: 0;
+  color: #d6d3cc;
+  line-height: 1.5;
+}
+.retired-item a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  white-space: nowrap;
+}
+.retired-current { color: #ff6971; }
+@media(max-width:800px) {
+  .retired { margin-top: 4rem; }
+  .retired-heading { grid-template-columns: 1fr; gap: 1rem; }
+  .retired-heading p { margin: 0; }
+  .retired-item { grid-template-columns: 7rem 1fr; gap: 1rem; }
+  .retired-main { grid-column: 2; }
+  .retired-item a { grid-column: 2; justify-self: start; }
+}
+
 /* The opening lands like a sequence of cut-paper title cards. Content stays
    readable throughout, and the skill index itself never moves on interaction. */
 @media (prefers-reduced-motion: no-preference) {
